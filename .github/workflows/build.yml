@@ -16,7 +16,7 @@ jobs:
         run: |
           pip install cfn-lint
           cfn-lint --template ./**/*.yaml
-          exit 1
+          echo "Created report"
 
   sonarcloud:
     needs: cfn-linter

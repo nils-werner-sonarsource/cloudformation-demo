@@ -6,7 +6,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
-  cloudformation-linter:
+  cfn-linter:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,6 +20,7 @@ jobs:
         run: cfn-lint --template ./**/*.yaml --format json >> report.json
 
   sonarcloud:
+    needs: cfn-linter
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

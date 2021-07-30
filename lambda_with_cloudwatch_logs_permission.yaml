@@ -18,87 +18,6 @@ Resources:
             - response.send(event, context, response.SUCCESS, responseData);}
       Runtime: nodejs6.10
 
-  FunctionWithWildcardAllRoleByGetAtt:
-    Type: AWS::Lambda::Function
-    Properties:
-      Handler: index.handler
-      Role: !GetAtt RoleWithWildcardAll.Arn
-      Code:
-        ZipFile:
-          Fn::Join:
-            - ""
-            - var response = require('cfn-response');
-            - exports.handler = function(event, context) {
-            - var responseData = {Value: event.ResourceProperties.List};
-            - responseData.Value.push(event.ResourceProperties.AppendedItem);
-            - response.send(event, context, response.SUCCESS, responseData);}
-      Runtime: nodejs6.10
-
-  FunctionWithWildcardAllRoleByFnGetAtt:
-    Type: AWS::Lambda::Function
-    Properties:
-      Handler: index.handler
-      Role:
-        Fn::GetAtt: RoleWithWildcardAll.Arn
-      Code:
-        ZipFile:
-          Fn::Join:
-            - ""
-            - var response = require('cfn-response');
-            - exports.handler = function(event, context) {
-            - var responseData = {Value: event.ResourceProperties.List};
-            - responseData.Value.push(event.ResourceProperties.AppendedItem);
-            - response.send(event, context, response.SUCCESS, responseData);}
-      Runtime: nodejs6.10
-
-  FunctionWithWildcardLogsRoleByRef:
-    Type: AWS::Lambda::Function
-    Properties:
-      Handler: index.handler
-      Role: !Ref RoleWithWildcardLogs
-      Code:
-        ZipFile:
-          Fn::Join:
-            - ""
-            - var response = require('cfn-response');
-            - exports.handler = function(event, context) {
-            - var responseData = {Value: event.ResourceProperties.List};
-            - responseData.Value.push(event.ResourceProperties.AppendedItem);
-            - response.send(event, context, response.SUCCESS, responseData);}
-      Runtime: nodejs6.10
-
-  FunctionWithPutLogEventsRoleByRef:
-    Type: AWS::Lambda::Function
-    Properties:
-      Handler: index.handler
-      Role: !Ref RoleWithPutLogEvents
-      Code:
-        ZipFile:
-          Fn::Join:
-            - ""
-            - var response = require('cfn-response');
-            - exports.handler = function(event, context) {
-            - var responseData = {Value: event.ResourceProperties.List};
-            - responseData.Value.push(event.ResourceProperties.AppendedItem);
-            - response.send(event, context, response.SUCCESS, responseData);}
-      Runtime: nodejs6.10
-
-  FunctionWithCreateLogsAndPutLogEventsRoleByRef:
-    Type: AWS::Lambda::Function
-    Properties:
-      Handler: index.handler
-      Role: !Ref RoleWithWildcardCreateLogAndPutLogEvents
-      Code:
-        ZipFile:
-          Fn::Join:
-            - ""
-            - var response = require('cfn-response');
-            - exports.handler = function(event, context) {
-            - var responseData = {Value: event.ResourceProperties.List};
-            - responseData.Value.push(event.ResourceProperties.AppendedItem);
-            - response.send(event, context, response.SUCCESS, responseData);}
-      Runtime: nodejs6.10
-
   RoleWithWildcardAll:
     Type: AWS::IAM::Role
     Properties:
@@ -119,6 +38,22 @@ Resources:
               - Effect: Allow
                 Action: '*'
                 Resource: '*'
+
+  FunctionWithCreateLogsAndPutLogEventsRoleByRef:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: index.handler
+      Role: !Ref RoleWithWildcardCreateLogAndPutLogEvents
+      Code:
+        ZipFile:
+          Fn::Join:
+            - ""
+            - var response = require('cfn-response');
+            - exports.handler = function(event, context) {
+            - var responseData = {Value: event.ResourceProperties.List};
+            - responseData.Value.push(event.ResourceProperties.AppendedItem);
+            - response.send(event, context, response.SUCCESS, responseData);}
+      Runtime: nodejs6.10
 
   RoleWithWildcardLogs:
     Type: AWS::IAM::Role
